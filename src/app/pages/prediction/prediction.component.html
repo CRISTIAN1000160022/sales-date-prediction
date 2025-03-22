@@ -1,0 +1,47 @@
+<div class="prediction-container">
+  <div class="header-container">
+    <h2>Customers</h2>
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Customer Name"
+        [value]="searchQuery"
+        (input)="onSearch($event)"
+      />
+      <i class="pi pi-search search-icon"></i>
+    </div>
+  </div>
+
+  @if (filteredPredictions.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sortTable('CustomerName')">Cliente</th>
+          <th (click)="sortTable('LastOrderDate')">Última Orden</th>
+          <th (click)="sortTable('NextPredictedOrder')">Próxima Orden</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (prediction of filteredPredictions; track prediction.CustomerName) {
+          <tr>
+            <td>{{ prediction.CustomerName }}</td>
+            <td>{{ prediction.LastOrderDate }}</td>
+            <td>{{ prediction.NextPredictedOrder }}</td>
+            <td>
+              <button class="view-orders-btn" (click)="viewOrders(prediction)">VIEW ORDERS</button>
+              <button class="new-order-btn" (click)="newOrder(prediction)">NEW ORDER</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+  } @else {
+    <p class="error-message">No hay predicciones disponibles.</p>
+  }
+</div>

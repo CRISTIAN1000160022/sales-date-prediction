@@ -1,0 +1,8 @@
+<h2>Órdenes del Cliente</h2>
+<ul>
+  @for (order of orders; track order.orderid) {
+    <li>
+      {{ order.orderid }} - {{ order.requireddate }}
+    </li>
+  }
+</ul>
