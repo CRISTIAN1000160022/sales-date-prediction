@@ -1,0 +1,80 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2>Customer {{ customerName }} - New Order</h2>
+  </div>
+    <div class="form-section">
+      <h3>Order</h3>
+      <table>
+        <tr>
+          <td><label for="employee">Employee*</label></td>
+          <td>
+            <select id="employee" name="Empid" required [(ngModel)]="orderData.Empid">
+              @for (employee of employees; track employee.Empid) {
+                <option [value]="employee.Empid">{{ employee.FullName }}</option>
+              }
+            </select>
+          <td><label for="shipper">Shipper*</label></td>
+          <td>
+            <select id="shipper" name="Shipid" required [(ngModel)]="orderData.Shipid">
+              @for (shipper of shippers; track shipper.Shipperid) {
+                <option [value]="shipper.Shipperid">{{ shipper.Companyname }}</option>
+              }
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="shipName">Ship Name*</label></td>
+          <td><input id="shipName" name="Shipname" type="text" required (input)="onFieldChange($event)" /></td>
+          <td><label for="shipAddress">Ship Adreess*</label></td>
+          <td><input id="shipAddress" name="Shipaddress" type="text" required (input)="onFieldChange($event)" /></td>
+        </tr>
+        <tr>
+          <td><label for="shipCity">Ship City*</label></td>
+          <td><input id="shipCity" name="Shipcity" type="text" required (input)="onFieldChange($event)" /></td>
+          <td><label for="shipCountry">Ship Country*</label></td>
+          <td><input id="shipCountry" name="Shipcountry" type="text" required (input)="onFieldChange($event)" /></td>
+        </tr>
+        <tr>
+          <td><label for="orderDate">Order Date*</label></td>
+          <td><input id="orderDate" name="Orderdate" type="date" required (input)="onFieldChange($event)" /></td>
+          <td><label for="requiredDate">Required Date*</label></td>
+          <td><input id="requiredDate" name="Requireddate" type="date" required (input)="onFieldChange($event)" /></td>
+        </tr>
+        <tr>
+          <td><label for="shippedDate">Ship Date*</label></td>
+          <td><input id="shippedDate" name="Shippeddate" type="date" required (input)="onFieldChange($event)" /></td>
+          <td><label for="freight">Freight*</label></td>
+          <td><input id="freight" name="Freight" type="number" required (input)="onFieldChange($event)" /></td>
+        </tr>
+      </table>
+    </div>
+    <div class="form-section">
+      <h3>Order Details</h3>
+      <table>
+        <tr>
+          <td><label for="product">Product*</label></td>
+          <td>
+            <select id="product" name="Productid" required [(ngModel)]="orderData.Productid">
+              @for (product of products; track product.Productid) {
+                <option [value]="product.Productid">{{ product.Productname }}</option>
+              }
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td><label for="unitPrice">Unit Price*</label></td>
+          <td><input id="unitPrice" name="Unitprice" type="number" required (input)="onFieldChange($event)" /></td>
+          <td><label for="quantity">Quantity*</label></td>
+          <td><input id="quantity" name="Qty" type="number" required (input)="onFieldChange($event)" /></td>
+        </tr>
+        <tr>
+          <td><label for="discount">Discount*</label></td>
+          <td><input id="discount" name="Discount" type="number" required (input)="onFieldChange($event)" /></td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" (click)="closeModal()">Close</button>
+      <button type="submit" (click)="onSubmit()">Save</button>
+    </div>
+</div>

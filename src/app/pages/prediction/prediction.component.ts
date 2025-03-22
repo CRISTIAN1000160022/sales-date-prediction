@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PredictionService } from '../../services/prediction.service';
+import { OrdersComponent } from '../orders/orders.component';
+import { NewOrderComponent } from './modals/new-order/new-order.component';
 
 @Component({
   selector: 'app-prediction',
+  imports: [OrdersComponent,NewOrderComponent],
   templateUrl: './prediction.component.html',
   styleUrls: ['./prediction.component.css']
 })
@@ -13,6 +16,9 @@ export class PredictionComponent implements OnInit {
   currentPage = 1; // Página actual
   itemsPerPage = 10; // Elementos por página
   totalPages = 1; // Total de páginas
+  selectedPrediction: any = null; // Predicción seleccionada para mostrar en OrdersComponent
+  isModalOpen = false; // Controla la visibilidad del modal
+  token = '';
 
   constructor(private predictionService: PredictionService) {}
 
@@ -20,17 +26,16 @@ export class PredictionComponent implements OnInit {
     this.authenticateAndFetchPredictions();
   }
 
-  // Método para autenticar y luego obtener predicciones
   authenticateAndFetchPredictions(): void {
     this.predictionService.authenticate('admin', '123456').subscribe(response => {
       if (response.success) {
-        this.predictionService.saveToken(response.Data); // Guardamos el token
+        this.predictionService.saveToken(response.Data);
+        this.token = response.Data;
         this.getPredictions();
       }
     });
   }
 
-  // Método para obtener predicciones desde el servidor
   getPredictions(): void {
     this.predictionService.getAllPredictions().subscribe(
       data => {
@@ -44,59 +49,72 @@ export class PredictionComponent implements OnInit {
     );
   }
 
-  // Método para filtrar predicciones según el texto de búsqueda
   onSearch(event: Event): void {
-    const input = event.target as HTMLInputElement; // Obtenemos el valor del input
-    this.searchQuery = input.value; // Actualizamos manualmente searchQuery
+    const input = event.target as HTMLInputElement;
+    this.searchQuery = input.value;
     this.filteredPredictions = this.predictions.filter(prediction =>
       prediction.CustomerName.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
     this.updatePagination();
   }
 
-  // Método para ordenar la tabla por una columna específica
   sortTable(column: string): void {
     this.filteredPredictions.sort((a, b) =>
       a[column] > b[column] ? 1 : a[column] < b[column] ? -1 : 0
     );
+    this.updatePagination();
   }
 
-  // Actualiza la paginación según las predicciones filtradas
   updatePagination(): void {
     this.totalPages = Math.ceil(this.filteredPredictions.length / this.itemsPerPage);
-    this.currentPage = 1;
+    this.currentPage = 1; // Reinicia a la primera página al cambiar el número de elementos por página
   }
 
-  // Obtiene las predicciones de la página actual
   get paginatedPredictions(): any[] {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     return this.filteredPredictions.slice(start, end);
   }
 
-  // Cambia a la página anterior
   prevPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
   }
 
-  // Cambia a la página siguiente
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
     }
   }
 
-  // Lógica para abrir el modal de "Orders View"
   viewOrders(prediction: any): void {
     console.log('View Orders:', prediction);
-    // Aquí iría la lógica para abrir el modal
+    this.selectedPrediction = prediction; // Asigna la predicción seleccionada
   }
 
-  // Lógica para abrir el modal de "New Order"
   newOrder(prediction: any): void {
-    console.log('New Order:', prediction);
-    // Aquí iría la lógica para abrir el modal
+    this.isModalOpen = true; // Abre el modal
+  }
+
+  onOrderCreated(): void {
+    this.isModalOpen = false; // Cierra el modal
+    this.getPredictions(); // Refresca las predicciones
+  }
+
+  // Método para reemplazar Math.min
+  getMin(a: number, b: number): number {
+    return Math.min(a, b);
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false; // Cierra el modal
+  }
+
+  // Método para manejar el cambio de filas por página
+  onItemsPerPageChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.itemsPerPage = parseInt(select.value, 10); // Actualiza el número de elementos por página
+    this.updatePagination(); // Actualiza la paginación
   }
 }

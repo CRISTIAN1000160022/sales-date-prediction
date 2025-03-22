@@ -1,8 +1,48 @@
-<h2>Órdenes del Cliente</h2>
-<ul>
-  @for (order of orders; track order.orderid) {
-    <li>
-      {{ order.orderid }} - {{ order.requireddate }}
-    </li>
+<div class="orders-container">
+  <div class="header-container">
+    <h2>{{ customerName }} - Orders</h2>
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Buscar por Ship Name"
+        [value]="searchQuery"
+        (input)="onSearch($event)"
+      />
+    </div>
+  </div>
+
+  @if (filteredOrders.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sortTable('orderid')">Order ID</th>
+          <th (click)="sortTable('requireddate')">Required Date</th>
+          <th (click)="sortTable('shippeddate')">Shipped Date</th>
+          <th (click)="sortTable('shipname')">Ship Name</th>
+          <th (click)="sortTable('shipaddress')">Ship Address</th>
+          <th (click)="sortTable('shipcity')">Ship City</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of paginatedOrders; track order.orderid) {
+          <tr>
+            <td>{{ order.orderid }}</td>
+            <td>{{ order.requireddate }}</td>
+            <td>{{ order.shippeddate }}</td>
+            <td>{{ order.shipname }}</td>
+            <td>{{ order.shipaddress }}</td>
+            <td>{{ order.shipcity }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+  } @else {
+    <p>No hay órdenes disponibles.</p>
   }
-</ul>
+  <button (click)="returnHome()">Close</button>
+</div>

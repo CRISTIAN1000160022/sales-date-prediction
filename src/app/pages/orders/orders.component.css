@@ -1,0 +1,116 @@
+.orders-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff; /* Fondo blanco */
+  border: 1px solid #ddd; /* Borde alrededor del contenedor */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0; /* Línea divisoria */
+  padding-bottom: 10px;
+}
+
+.header-container h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333; /* Color del texto */
+}
+
+.search-container input {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 250px;
+  outline: none;
+}
+
+.search-container input:focus {
+  border-color: #007bff; /* Color azul al enfocar */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  background-color: #fff; /* Fondo blanco */
+}
+
+table th, table td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  color: #555; /* Color del texto */
+}
+
+table th {
+  cursor: pointer;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  font-weight: bold;
+  color: #333; /* Color del texto */
+}
+
+table th:hover {
+  background-color: #e9ecef; /* Fondo más oscuro al pasar el cursor */
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Fondo alternado para filas pares */
+}
+
+table tr:hover {
+  background-color: #f1f1f1; /* Fondo más oscuro al pasar el cursor */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #007bff; /* Fondo azul */
+  color: #fff; /* Texto blanco */
+  margin: 0 5px;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  background-color: #ccc; /* Fondo gris para botones deshabilitados */
+}
+
+.pagination span {
+  font-size: 14px;
+  color: #555; /* Color del texto */
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #dc3545; /* Fondo rojo */
+  color: #fff; /* Texto blanco */
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #c82333; /* Fondo rojo más oscuro al pasar el cursor */
+}
