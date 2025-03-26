@@ -18,7 +18,8 @@ export class PredictionComponent implements OnInit {
   totalPages = 1; // Total de páginas
   selectedPrediction: any = null; // Predicción seleccionada para mostrar en OrdersComponent
   isModalOpen = false; // Controla la visibilidad del modal
-  token = '';
+  token = ''; 
+  customerName = '';
 
   constructor(private predictionService: PredictionService) {}
 
@@ -95,6 +96,7 @@ export class PredictionComponent implements OnInit {
 
   newOrder(prediction: any): void {
     this.isModalOpen = true; // Abre el modal
+    this.customerName = prediction.CustomerName; // Asigna el nombre del cliente
   }
 
   onOrderCreated(): void {

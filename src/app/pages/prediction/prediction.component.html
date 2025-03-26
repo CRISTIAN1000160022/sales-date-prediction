@@ -3,7 +3,7 @@
 <app-orders [predictions]="[selectedPrediction]"></app-orders>
 } @else if(isModalOpen){
 <app-new-order
-  [customerName]="selectedPrediction?.CustomerName"
+  [customerName]="customerName"
   [token]="token"
   (orderCreated)="onOrderCreated()"
   (closeModalEvent)="closeModal()"
